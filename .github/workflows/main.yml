@@ -1,0 +1,16 @@
+name: macOS script checks
+
+on:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check shell syntax
+        run: bash -n credentialvault-mac/CredentialVault-Installer.command credentialvault-mac/dependency.sh
+
+      - name: Compile AppleScript
+        run: osacompile -o "$RUNNER_TEMP/chrome-setup.scpt" credentialvault-mac/chrome-setup.applescript
